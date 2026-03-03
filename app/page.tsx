@@ -586,7 +586,7 @@ function LoadingScreen({ onComplete }: { onComplete: () => void }) {
           className="absolute inset-0 origin-top z-10"
           initial={{ rotateX: 0 }}
           animate={{
-            rotateX: stage >= 1 ? -180 : 0,
+            rotateX: stage >= 1 ? 180 : 0,
             zIndex: stage >= 2 ? 0 : 10,
           }}
           transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}

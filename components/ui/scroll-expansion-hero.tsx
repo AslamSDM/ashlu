@@ -10,6 +10,7 @@ import {
 } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { Noise } from "./noise";
 
 interface ScrollExpandMediaProps {
   mediaType?: "video" | "image";
@@ -289,66 +290,60 @@ const ScrollExpandMedia = ({
                 >
                   بِسْمِ ٱللّٰهِ ٱلرَّحْمٰنِ ٱلرَّحِيمِ
                 </motion.p>
-                <motion.h2
-                  className="text-7xl md:text-9xl lg:text-[10rem] font-serif tracking-normal drop-shadow-[0_4px_25px_rgba(20,10,0,0.8)] leading-none text-gradient-live"
-                  initial={{ color: "#FFF8E1" }}
-                  animate={{
-                    color: ["#FFF8E1", "#FFF176", "#FFC107", "#FFF8E1"], // Cream, Light Yellow, Yellow
-                    textShadow: [
-                      "0 0 10px rgba(255,248,225,0.4), 0 0 20px rgba(255,193,7,0.3)",
-                      "0 0 15px rgba(255,241,118,0.6), 0 0 25px rgba(255,193,7,0.5)",
-                      "0 0 20px rgba(255,193,7,0.7), 0 0 30px rgba(255,241,118,0.5)",
-                      "0 0 10px rgba(255,248,225,0.4), 0 0 20px rgba(255,193,7,0.3)",
-                    ],
-                  }}
-                  transition={{
-                    duration: 5,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                  style={{
-                    transform: `translateX(-${textTranslateX}vw)`,
-                  }}
-                >
-                  {firstWord}
-                </motion.h2>
+                <div className="relative inline-block w-full">
+                  <motion.h2
+                    className="text-7xl md:text-9xl lg:text-[10rem] font-serif tracking-normal drop-shadow-[0_4px_12px_rgba(20,10,0,0.4)] leading-none relative z-10"
+                    initial={{ color: "#3B2F1F" }}
+                    animate={{
+                      color: ["#3B2F1F", "#fb832dbb", "#e4b39eb1", "#3B2F1F"], // Dark Brown, Yellow, Beige, Dark Brown
+                    }}
+                    transition={{
+                      duration: 5,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                    style={{
+                      transform: `translateX(-${textTranslateX}vw)`,
+                    }}
+                  >
+                    {firstWord}
+                  </motion.h2>
+                  <Noise />
+                </div>
 
                 <motion.div
                   className="my-3 md:my-5 flex items-center justify-center gap-4 w-full"
                   initial={{ opacity: 1 }}
                   animate={{ opacity: 1 - scrollProgress * 2 }}
                 >
-                  <span className="h-px w-12 md:w-24 bg-gradient-to-r from-transparent to-[#A88B5C]" />
-                  <span className="text-4xl md:text-6xl font-script drop-shadow-[0_2px_8px_rgba(60,45,25,0.7)] text-[#A88B5C]">
+                  <span className="h-px w-12 md:w-24 bg-gradient-to-r from-transparent to-[#3B2F1F]" />
+                  <span className="text-4xl md:text-6xl font-script drop-shadow-[0_4px_16px_rgba(20,10,0,0.9)] text-[#3B2F1F]">
                     weds
                   </span>
-                  <span className="h-px w-12 md:w-24 bg-gradient-to-l from-transparent to-[#A88B5C]" />
+                  <span className="h-px w-12 md:w-24 bg-gradient-to-l from-transparent to-[#3B2F1F]" />
                 </motion.div>
 
-                <motion.h2
-                  className="text-7xl md:text-9xl lg:text-[10rem] font-serif tracking-normal drop-shadow-[0_4px_25px_rgba(20,10,0,0.8)] leading-none text-gradient-live"
-                  initial={{ color: "#FFF8E1" }}
-                  animate={{
-                    color: ["#FFF8E1", "#FFC107", "#FFF176", "#FFF8E1"], // Reversed animation for asymmetry
-                    textShadow: [
-                      "0 0 10px rgba(255,248,225,0.4), 0 0 20px rgba(255,193,7,0.3)",
-                      "0 0 20px rgba(255,193,7,0.7), 0 0 30px rgba(255,241,118,0.5)",
-                      "0 0 15px rgba(255,241,118,0.6), 0 0 25px rgba(255,193,7,0.5)",
-                      "0 0 10px rgba(255,248,225,0.4), 0 0 20px rgba(255,193,7,0.3)",
-                    ],
-                  }}
-                  transition={{
-                    duration: 5,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 1,
-                  }}
-                  style={{
-                    transform: `translateX(${textTranslateX}vw)`,
-                  }}
-                >
-                  {restOfTitle}
-                </motion.h2>
+                <div className="relative inline-block w-full">
+                  <motion.h2
+                    className="text-7xl md:text-9xl lg:text-[10rem] font-serif tracking-normal drop-shadow-[0_4px_12px_rgba(2,10,0,0.4)] leading-none relative z-10"
+                    initial={{ color: "#E4C59E" }}
+                    animate={{
+                      color: ["#3B2F1F", "#fb832dbb", "#e4b39eb1", "#3B2F1F"], // Dark Brown, Yellow, Beige, Dark Brown
+                    }}
+                    transition={{
+                      duration: 5,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: 1,
+                    }}
+                    style={{
+                      transform: `translateX(${textTranslateX}vw)`,
+                    }}
+                  >
+                    {restOfTitle}
+                  </motion.h2>
+                  <Noise />
+                </div>
 
                 {date && (
                   <motion.p
