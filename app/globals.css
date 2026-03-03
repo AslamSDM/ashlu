@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Great+Vibes&family=Poppins:wght@300;400&display=swap");
+
+@import "tailwindcss";
+
+:root {
+  /* Light Boho Wedding Palette */
+  --color-royal: #EFE8D6;        /* Secondary Cream Background */
+  --color-royal-light: #FFFDF7;
+  --color-royal-dark: #DED3BC;
+  
+  --color-midnight: #F9F6EA;     /* Base light background (Cream) */
+  --color-midnight-light: #FAF8F0;
+  
+  --color-moonlight: #6C593E;    /* Dark Brown text */
+  --color-moonlight-dim: #8A7454;/* Lighter Brown text */
+  
+  --color-gold: #B39C7D;         /* Muted Gold/Taupe matching the cream */
+  --color-gold-light: #CDB79A;
+  --color-gold-dark: #8F785C;
+  --color-gold-shimmer: #8A7454;
+  /* other properties kept... */
+}
+
+@theme {
+  /* Border Radius */
+  --radius: 0.625rem;
+  --font-script: "Great Vibes", cursive;
+  --font-serif: "Cormorant Garamond", serif;
+  --font-body: "Poppins", sans-serif;
+}
