@@ -1,6 +1,7 @@
 "use client";
 
 import ScrollExpandMedia from "@/components/ui/scroll-expansion-hero";
+import { AudioPlayer } from "@/components/ui/audio-player";
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import {
@@ -825,7 +826,7 @@ function InfoCard({ icon, title, description, index }: InfoCardProps) {
       <img
         src="/mandala-pattern.png"
         alt=""
-        className="absolute inset-0 w-full h-full object-cover opacity-[0.04] mix-blend-screen pointer-events-none"
+        className="absolute inset-0 w-full h-full object-cover opacity-[0.1] mix-blend-screen pointer-events-none"
       />
 
       <motion.div
@@ -960,6 +961,8 @@ export default function Home() {
         {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
       </AnimatePresence>
 
+      <AudioPlayer />
+
       {!isLoading && (
         <ScrollExpandMedia
           mediaType="image"
@@ -1074,12 +1077,12 @@ export default function Home() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.4, duration: 0.8 }}
-                className="bg-[#0D1B2E] p-10 md:p-14 rounded-xl border border-gold/30 shadow-royal backdrop-blur-sm relative overflow-hidden"
+                className="bg-[#0D1B2E] text-white p-10 md:p-14 rounded-xl border border-gold/30 shadow-royal backdrop-blur-sm relative overflow-hidden"
               >
                 <img
                   src="/mughal-floral.png"
                   alt=""
-                  className="absolute inset-0 w-full h-full object-cover opacity-[0.05] mix-blend-screen pointer-events-none"
+                  className="absolute inset-0 w-full h-full object-cover opacity-[0.1] mix-blend-screen pointer-events-none"
                 />
                 <h2 className="text-3xl md:text-4xl font-serif text-gold-shimmer tracking-widest mb-6">
                   WARMLY INVITE YOU

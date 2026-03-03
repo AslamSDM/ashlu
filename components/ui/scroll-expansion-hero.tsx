@@ -293,12 +293,17 @@ const ScrollExpandMedia = ({
                 <div className="relative inline-block w-full">
                   <motion.h2
                     className="text-7xl md:text-9xl lg:text-[10rem] font-serif tracking-normal drop-shadow-[0_4px_12px_rgba(20,10,0,0.4)] leading-none relative z-10"
-                    initial={{ color: "#3B2F1F" }}
+                    initial={{ color: "#b36800ff" }}
                     animate={{
-                      color: ["#3B2F1F", "#fb832dbb", "#e4b39eb1", "#3B2F1F"], // Dark Brown, Yellow, Beige, Dark Brown
+                      color: [
+                        "#b07f14ff",
+                        "#b97413ff",
+                        "#f6ac00db",
+                        "#b46000ff",
+                      ], // Lighter beige/gold shades
                     }}
                     transition={{
-                      duration: 5,
+                      duration: 8,
                       repeat: Infinity,
                       ease: "easeInOut",
                     }}
@@ -308,7 +313,6 @@ const ScrollExpandMedia = ({
                   >
                     {firstWord}
                   </motion.h2>
-                  <Noise />
                 </div>
 
                 <motion.div
@@ -326,15 +330,15 @@ const ScrollExpandMedia = ({
                 <div className="relative inline-block w-full">
                   <motion.h2
                     className="text-7xl md:text-9xl lg:text-[10rem] font-serif tracking-normal drop-shadow-[0_4px_12px_rgba(2,10,0,0.4)] leading-none relative z-10"
-                    initial={{ color: "#E4C59E" }}
+                    initial={{ color: "#E8DCC4" }}
                     animate={{
-                      color: ["#3B2F1F", "#fb832dbb", "#e4b39eb1", "#3B2F1F"], // Dark Brown, Yellow, Beige, Dark Brown
+                      color: ["#E8DCC4", "#F5EAD4", "#D5C4A1", "#E8DCC4"], // Lighter beige/gold shades
                     }}
                     transition={{
-                      duration: 5,
+                      duration: 8,
                       repeat: Infinity,
                       ease: "easeInOut",
-                      delay: 1,
+                      delay: 2,
                     }}
                     style={{
                       transform: `translateX(${textTranslateX}vw)`,
@@ -342,7 +346,6 @@ const ScrollExpandMedia = ({
                   >
                     {restOfTitle}
                   </motion.h2>
-                  <Noise />
                 </div>
 
                 {date && (
