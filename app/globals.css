@@ -2,6 +2,10 @@
 
 @import "tailwindcss";
 
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   /* Light Boho Wedding Palette */
   --color-royal: #EFE8D6;        /* Secondary Cream Background */

@@ -487,6 +487,10 @@ function LoadingScreen({ onComplete }: { onComplete: () => void }) {
 
     checkMobile();
 
+    // Preload the hero image during the loading screen
+    const img = new window.Image();
+    img.src = "/ashmlu.jpg";
+
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
