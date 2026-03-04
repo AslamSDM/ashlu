@@ -216,7 +216,7 @@ const ScrollExpandMedia = ({
             <div className="flex flex-col items-center justify-center w-full h-[100dvh] relative max-w-none">
               {/* Expanding Media Frame */}
               <div
-                className="absolute z-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-none shadow-[0_0_50px_rgba(108,89,62,0.3)] border-[3px] border-gold/60"
+                className="absolute z-0 top-[35%] md:top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-none shadow-[0_0_50px_rgba(108,89,62,0.3)] border-[3px] border-gold/60"
                 style={{
                   width: `${mediaWidth}px`,
                   height: `${mediaHeight}px`,
@@ -277,14 +277,23 @@ const ScrollExpandMedia = ({
                 </div>
               </div>
 
+              {/* Bismillah — above image on mobile, inside text overlay on desktop */}
+              <motion.p
+                className="absolute top-[8%] left-0 right-0 text-center md:hidden text-sm font-serif tracking-[0.2em] text-[#6C593E] drop-shadow-[0_0_15px_rgba(255,255,255,0.8)] z-10"
+                initial={{ opacity: 1 }}
+                animate={{ opacity: 1 - scrollProgress * 2 }}
+              >
+                بِسْمِ ٱللّٰهِ ٱلرَّحْمٰنِ ٱلرَّحِيمِ
+              </motion.p>
+
               {/* Foreground Typography Container */}
               <div
-                className={`flex items-center justify-center text-center gap-1 md:gap-4 w-full relative z-10 transition-none flex-col ${
-                  textBlend ? "mix-blend-difference" : "mix-blend-normal"
+                className={`absolute left-0 right-0 bottom-24 md:bottom-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 flex items-center justify-center text-center gap-1 md:gap-4 w-full z-10 transition-none flex-col ${
+                  textBlend ? "md:mix-blend-difference" : "mix-blend-normal"
                 }`}
               >
                 <motion.p
-                  className="mb-6 md:mb-12 text-sm md:text-xl font-serif tracking-[0.2em] text-[#6C593E] drop-shadow-[0_0_15px_rgba(255,255,255,0.8)]"
+                  className="mb-6 md:mb-12 hidden md:block text-sm md:text-xl font-serif tracking-[0.2em] text-[#6C593E] drop-shadow-[0_0_15px_rgba(255,255,255,0.8)]"
                   initial={{ opacity: 1 }}
                   animate={{ opacity: 1 - scrollProgress * 2 }}
                 >
@@ -332,7 +341,12 @@ const ScrollExpandMedia = ({
                     className="text-7xl md:text-9xl lg:text-[10rem] font-serif tracking-normal drop-shadow-[0_4px_12px_rgba(2,10,0,0.4)] leading-none relative z-10"
                     initial={{ color: "#E8DCC4" }}
                     animate={{
-                      color: ["#E8DCC4", "#F5EAD4", "#D5C4A1", "#E8DCC4"], // Lighter beige/gold shades
+                      color: [
+                        "#b46000ff",
+                        "#f6ac00db",
+                        "#b97413ff",
+                        "#b07f14ff",
+                      ], // Lighter beige/gold shades
                     }}
                     transition={{
                       duration: 8,
@@ -358,6 +372,34 @@ const ScrollExpandMedia = ({
                   </motion.p>
                 )}
               </div>
+
+              {/* Scroll indicator arrow */}
+              <motion.div
+                className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 z-10"
+                initial={{ opacity: 1 }}
+                animate={{
+                  opacity: scrollProgress > 0.02 ? 0 : 1,
+                  y: [0, 8, 0],
+                }}
+                transition={{
+                  opacity: { duration: 0.3 },
+                  y: { repeat: Infinity, duration: 1.5, ease: "easeInOut" },
+                }}
+              >
+                <svg
+                  width="28"
+                  height="28"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#6C593E"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]"
+                >
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </motion.div>
             </div>
 
             {/* Floating Navbar — appears after content is revealed */}
