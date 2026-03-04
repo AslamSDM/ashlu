@@ -9,8 +9,7 @@ import {
   WheelEvent,
 } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { Noise } from "./noise";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 interface ScrollExpandMediaProps {
   mediaType?: "video" | "image";
@@ -44,6 +43,15 @@ const ScrollExpandMedia = ({
   const [isMobileState, setIsMobileState] = useState<boolean>(false);
 
   const sectionRef = useRef<HTMLDivElement | null>(null);
+  const contentRef = useRef<HTMLDivElement | null>(null);
+
+  // useScroll for post-expansion native scroll animations
+  const { scrollYProgress } = useScroll({
+    target: contentRef,
+    offset: ["start end", "start start"],
+  });
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.5], [0.3, 1]);
+  const contentY = useTransform(scrollYProgress, [0, 0.5], [40, 0]);
 
   useEffect(() => {
     setScrollProgress(0);
@@ -172,7 +180,7 @@ const ScrollExpandMedia = ({
     return () => window.removeEventListener("resize", checkIfMobile);
   }, []);
 
-  const mediaWidth = 300 + scrollProgress * (isMobileState ? 650 : 1250);
+  const mediaWidth = 300 + scrollProgress * (isMobileState ? 400 : 1250);
   const mediaHeight = 400 + scrollProgress * (isMobileState ? 200 : 400);
   const textTranslateX = scrollProgress * (isMobileState ? 180 : 150);
 
@@ -220,8 +228,8 @@ const ScrollExpandMedia = ({
                 style={{
                   width: `${mediaWidth}px`,
                   height: `${mediaHeight}px`,
-                  maxWidth: isMobileState ? "95vw" : "100vw",
-                  maxHeight: isMobileState ? "85vh" : "100vh",
+                  maxWidth: isMobileState ? "92vw" : "100vw",
+                  maxHeight: isMobileState ? "60vh" : "100vh",
                   // Transition borders to sharp when fully expanded to act as full width section
                   borderRadius: scrollProgress >= 1 ? "0" : "12px",
                   borderWidth: scrollProgress >= 1 ? "0px" : "3px",
@@ -409,6 +417,7 @@ const ScrollExpandMedia = ({
                 initial={{ y: -60, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
+                style={{ willChange: "transform, opacity" }}
               >
                 <span className="text-lg md:text-xl font-serif text-white tracking-[0.15em]">
                   {firstWord}
@@ -424,10 +433,16 @@ const ScrollExpandMedia = ({
 
             {/* Content Revealed After Scrolling */}
             <motion.div
+              ref={contentRef}
               className="w-full max-w-none m-0 p-0"
               initial={{ opacity: 0 }}
               animate={{ opacity: showContent ? 1 : 0 }}
               transition={{ duration: 0.7 }}
+              style={
+                showContent
+                  ? { opacity: contentOpacity, y: contentY }
+                  : undefined
+              }
             >
               <div
                 className={
