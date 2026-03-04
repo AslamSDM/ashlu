@@ -216,7 +216,7 @@ const ScrollExpandMedia = ({
             <div className="flex flex-col items-center justify-center w-full h-[100dvh] relative max-w-none">
               {/* Expanding Media Frame */}
               <div
-                className="absolute z-0 top-[35%] md:top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-none shadow-[0_0_50px_rgba(108,89,62,0.3)] border-[3px] border-gold/60"
+                className="absolute z-0 top-[33%] md:top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-none shadow-[0_0_50px_rgba(108,89,62,0.3)] border-[3px] border-gold/60"
                 style={{
                   width: `${mediaWidth}px`,
                   height: `${mediaHeight}px`,
@@ -279,7 +279,7 @@ const ScrollExpandMedia = ({
 
               {/* Bismillah — above image on mobile, inside text overlay on desktop */}
               <motion.p
-                className="absolute top-[8%] left-0 right-0 text-center md:hidden text-sm font-serif tracking-[0.2em] text-[#6C593E] drop-shadow-[0_0_15px_rgba(255,255,255,0.8)] z-10"
+                className="absolute top-[2%] left-0 right-0 text-center md:hidden text-sm font-serif tracking-[0.2em] text-[#6C593E] drop-shadow-[0_0_15px_rgba(255,255,255,0.8)] z-10"
                 initial={{ opacity: 1 }}
                 animate={{ opacity: 1 - scrollProgress * 2 }}
               >
@@ -288,7 +288,7 @@ const ScrollExpandMedia = ({
 
               {/* Foreground Typography Container */}
               <div
-                className={`absolute left-0 right-0 bottom-24 md:bottom-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 flex items-center justify-center text-center gap-1 md:gap-4 w-full z-10 transition-none flex-col ${
+                className={`absolute left-0 right-0 bottom-12 md:bottom-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 flex items-center justify-center text-center gap-0 md:gap-4 w-full z-10 transition-none flex-col ${
                   textBlend ? "md:mix-blend-difference" : "mix-blend-normal"
                 }`}
               >
