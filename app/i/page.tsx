@@ -785,7 +785,7 @@ function EventCard({
       </div>
 
       <motion.a
-        href="https://maps.app.goo.gl/95aZ8uEqH6aJ7k6m6"
+        href="https://maps.app.goo.gl/v1ZYw9PoQ9BGv2Gz8"
         target="_blank"
         rel="noopener noreferrer"
         whileHover={{ scale: 1.05 }}
