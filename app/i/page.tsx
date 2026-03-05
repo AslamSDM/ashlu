@@ -785,7 +785,7 @@ function EventCard({
       </div>
 
       <motion.a
-        href="https://maps.app.goo.gl/cLAMzYEusNQ57gEE7?g_st=aw"
+        href="https://maps.app.goo.gl/bpbi1zKhA1PiFgCK8"
         target="_blank"
         rel="noopener noreferrer"
         whileHover={{ scale: 1.05 }}
@@ -1148,7 +1148,7 @@ export default function Home() {
 
           {/* Floating Location Button */}
           <motion.a
-            href="https://maps.app.goo.gl/cLAMzYEusNQ57gEE7?g_st=aw"
+            href="https://maps.app.goo.gl/bpbi1zKhA1PiFgCK8"
             target="_blank"
             rel="noopener noreferrer"
             className="fixed bottom-6 right-6 z-50 bg-[#08111D] text-white px-5 py-3 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.4)] border border-gold/30 flex items-center gap-2.5 font-body text-xs tracking-[0.15em] uppercase hover:bg-[#1B365D] hover:border-gold/50 transition-all backdrop-blur-md"
