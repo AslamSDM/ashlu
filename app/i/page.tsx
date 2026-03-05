@@ -928,7 +928,7 @@ export default function Home() {
       subtitle: "",
       emoji: "",
       date: "Monday, April 6th 2026",
-      venue: "Mythri Auditorium\n26MM+HHF, Kamanam, Kerala 679325",
+      venue: "Mythree Auditorium\n26MM+HHF, Kamanam, Kerala 679325",
       time: "11:00 AM - 2:00 PM",
       index: 0,
     },
