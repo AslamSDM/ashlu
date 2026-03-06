@@ -98,7 +98,16 @@ const ScrollExpandMedia = ({
       const deltaY = touchStartY - touchY;
 
       // Allow normal scroll down when expanded
-      if (mediaFullyExpanded && deltaY > 0) return;
+      if (mediaFullyExpanded && deltaY > 0) {
+        // If we're at the very top, the browser might have ignored native scroll for this swipe
+        // because we prevented default earlier. So we manually scroll to bridge the gap smoothly.
+        if (window.scrollY < 10 && e.cancelable) {
+          window.scrollBy({ top: deltaY, behavior: "auto" });
+          setTouchStartY(touchY);
+          e.preventDefault();
+        }
+        return;
+      }
 
       if (mediaFullyExpanded && deltaY < -20 && window.scrollY <= 5) {
         setMediaFullyExpanded(false);
@@ -180,9 +189,29 @@ const ScrollExpandMedia = ({
     return () => window.removeEventListener("resize", checkIfMobile);
   }, []);
 
-  const mediaWidth = 300 + scrollProgress * (isMobileState ? 400 : 1250);
-  const mediaHeight = 400 + scrollProgress * (isMobileState ? 200 : 400);
-  const textTranslateX = scrollProgress * (isMobileState ? 180 : 150);
+  // We calculate target dimensions to match the image's original aspect ratio (1024x687 => ~1.49)
+  const imgRatio = 1024 / 687;
+  const winW = typeof window !== "undefined" ? window.innerWidth : 1000;
+  const winH = typeof window !== "undefined" ? window.innerHeight : 1000;
+
+  // padding so it stays framed
+  const maxW = isMobileState ? winW * 0.92 : winW * 0.9;
+  const maxH = isMobileState ? winH * 0.8 : winH * 0.85;
+
+  let targetW = maxW;
+  let targetH = targetW / imgRatio;
+
+  if (targetH > maxH) {
+    targetH = maxH;
+    targetW = targetH * imgRatio;
+  }
+
+  const initialW = 300;
+  const initialH = isMobileState ? 250 : 400;
+
+  const mediaWidth = initialW + scrollProgress * (targetW - initialW);
+  const mediaHeight = initialH + scrollProgress * (targetH - initialH);
+  const textTranslateX = scrollProgress * (isMobileState ? 100 : 150);
 
   const firstWord = names ? names[0] : title ? title.split(" ")[0] : "";
   const restOfTitle = names
@@ -206,7 +235,7 @@ const ScrollExpandMedia = ({
             transition={{ duration: 0.1 }}
           >
             {/* Base lace texture layer */}
-            <div className="absolute inset-0 texture-lace opacity-40 mix-blend-lighten pointer-events-none" />
+            <div className="absolute inset-0 texture-lace opacity-40 pointer-events-none" />
 
             <Image
               src={bgImageSrc}
@@ -228,13 +257,8 @@ const ScrollExpandMedia = ({
                 style={{
                   width: `${mediaWidth}px`,
                   height: `${mediaHeight}px`,
-                  maxWidth: isMobileState ? "92vw" : "100vw",
-                  maxHeight: isMobileState ? "60vh" : "100vh",
-                  // Transition borders to sharp when fully expanded to act as full width section
-                  borderRadius: scrollProgress >= 1 ? "0" : "12px",
-                  borderWidth: scrollProgress >= 1 ? "0px" : "3px",
-                  borderTopWidth: scrollProgress >= 1 ? "4px" : "3px", // Keep top border when expanded
-                  borderBottomWidth: scrollProgress >= 1 ? "4px" : "3px",
+                  borderRadius: "12px",
+                  borderWidth: "3px",
                 }}
               >
                 {/* Expandable Image */}
@@ -243,14 +267,14 @@ const ScrollExpandMedia = ({
                     src={mediaSrc}
                     alt={title || "Wedding Photo"}
                     fill
-                    className="object-cover transition-none"
-                    style={{ borderRadius: scrollProgress >= 1 ? "0" : "10px" }}
+                    className="transition-none object-cover"
+                    style={{ borderRadius: "10px" }}
                   />
 
                   {/* Dark overlay that fades out as you expand */}
                   <motion.div
                     className="absolute inset-0 bg-moonlight/60 transition-none"
-                    style={{ borderRadius: scrollProgress >= 1 ? "0" : "10px" }}
+                    style={{ borderRadius: "10px" }}
                     initial={{ opacity: 0.8 }}
                     animate={{ opacity: 0.8 - scrollProgress * 0.4 }}
                     transition={{ duration: 0.2 }}
@@ -258,8 +282,8 @@ const ScrollExpandMedia = ({
 
                   {/* Subtle lace texture over the expanded media */}
                   <div
-                    className="absolute inset-0 texture-paper opacity-30 mix-blend-multiply pointer-events-none"
-                    style={{ borderRadius: scrollProgress >= 1 ? "0" : "10px" }}
+                    className="absolute inset-0 texture-paper opacity-30 pointer-events-none"
+                    style={{ borderRadius: "10px" }}
                   />
                 </div>
 
@@ -296,7 +320,7 @@ const ScrollExpandMedia = ({
 
               {/* Foreground Typography Container */}
               <div
-                className={`absolute left-0 right-0 bottom-12 md:bottom-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 flex items-center justify-center text-center gap-0 md:gap-4 w-full z-10 transition-none flex-col ${
+                className={`absolute left-0 right-0 bottom-26 md:bottom-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 flex items-center justify-center text-center gap-0 md:gap-4 w-full z-10 transition-none flex-col ${
                   textBlend ? "md:mix-blend-difference" : "mix-blend-normal"
                 }`}
               >
@@ -413,11 +437,15 @@ const ScrollExpandMedia = ({
             {/* Floating Navbar — appears after content is revealed */}
             {showContent && (
               <motion.div
-                className="fixed top-0 left-0 right-0 z-50 bg-[#08111D]/90 backdrop-blur-md border-b border-gold/20 py-3 px-6 flex items-center justify-center gap-3"
+                className="fixed top-0 left-0 right-0 z-50 bg-[#08111D]/90 border-b border-gold/20 py-3 px-6 flex items-center justify-center gap-3"
                 initial={{ y: -60, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                style={{ willChange: "transform, opacity" }}
+                style={{
+                  willChange: "transform, opacity",
+                  WebkitBackdropFilter: "blur(12px)",
+                  backdropFilter: "blur(12px)",
+                }}
               >
                 <span className="text-lg md:text-xl font-serif text-white tracking-[0.15em]">
                   {firstWord}
@@ -434,7 +462,7 @@ const ScrollExpandMedia = ({
             {/* Content Revealed After Scrolling */}
             <motion.div
               ref={contentRef}
-              className="w-full max-w-none m-0 p-0"
+              className={`w-full max-w-none m-0 p-0 transition-all duration-700 relative z-20 ${showContent && isMobileState ? "-mt-[45vh]" : ""}`}
               initial={{ opacity: 0 }}
               animate={{ opacity: showContent ? 1 : 0 }}
               transition={{ duration: 0.7 }}
