@@ -454,16 +454,10 @@ function FloatingHearts() {
    BOHO DECORATION OVERLAYS
    ============================================================ */
 function BohoDecor() {
-  return <></>;
   return (
     <div className="absolute top-0 inset-x-0 w-full pointer-events-none z-0 flex flex-col items-center opacity-45">
       {/* Top Border Arch */}
-      <img
-        src="/invite/Shape.png"
-        alt=""
-        className="w-full max-w-5xl h-auto -translate-y-10"
-        style={{ willChange: "transform" }}
-      />
+
       {/* Hanging Decorations */}
       <div className="absolute top-0 inset-x-0 w-full flex justify-between px-4 md:px-20">
         <img
@@ -476,7 +470,7 @@ function BohoDecor() {
           src="/invite/Shape_2.png"
           alt=""
           className="w-32 md:w-56 h-auto origin-top"
-          style={{ transform: "scaleX(-1)", willChange: "transform" }}
+          style={{ transform: "", willChange: "transform" }}
         />
       </div>
     </div>
@@ -1025,7 +1019,7 @@ export default function Home() {
             <div className="absolute inset-0 bg-gradient-to-b from-midnight via-transparent to-midnight/80 pointer-events-none z-0" />
 
             {/* Corner Decorations */}
-            <div className="absolute top-0 left-0 w-48 md:w-64 h-48 md:h-64 opacity-20 pointer-events-none">
+            {/* <div className="absolute top-0 left-0 w-48 md:w-64 h-48 md:h-64 opacity-20 pointer-events-none">
               <img
                 src="/invite/Shape__2.png"
                 alt=""
@@ -1039,7 +1033,7 @@ export default function Home() {
                 className="w-full h-full object-contain"
                 style={{ transform: "rotate(180deg)" }}
               />
-            </div>
+            </div> */}
 
             <div className="max-w-3xl mx-auto px-6 text-center relative z-10">
               <motion.div

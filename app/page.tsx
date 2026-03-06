@@ -448,16 +448,10 @@ function FloatingHearts() {
    BOHO DECORATION OVERLAYS
    ============================================================ */
 function BohoDecor() {
-  return <></>;
   return (
     <div className="absolute top-0 inset-x-0 w-full pointer-events-none z-0 flex flex-col items-center opacity-45">
       {/* Top Border Arch */}
-      <img
-        src="/invite/Shape.png"
-        alt=""
-        className="w-full max-w-5xl h-auto -translate-y-10"
-        style={{ willChange: "transform" }}
-      />
+
       {/* Hanging Decorations */}
       <div className="absolute top-0 inset-x-0 w-full flex justify-between px-4 md:px-20">
         <img
@@ -470,7 +464,7 @@ function BohoDecor() {
           src="/invite/Shape_2.png"
           alt=""
           className="w-32 md:w-56 h-auto origin-top"
-          style={{ transform: "scaleX(-1)", willChange: "transform" }}
+          style={{ transform: "", willChange: "transform" }}
         />
       </div>
     </div>
