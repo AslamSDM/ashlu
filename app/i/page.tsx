@@ -365,7 +365,13 @@ function FloatingLanterns() {
               ease: "easeInOut",
             }}
           >
-            <div className="w-10 h-14 bg-gradient-to-b from-amber-300/90 to-orange-500/70 rounded-lg shadow-[0_0_40px_rgba(251,191,36,0.6)] border border-amber-200/60">
+            <div
+              className="w-10 h-14 bg-gradient-to-b from-amber-300/90 to-orange-500/70 rounded-lg shadow-[0_0_40px_rgba(251,191,36,0.6)] border border-amber-200/60"
+              style={{
+                willChange: "transform",
+                WebkitTransform: "translateZ(0)",
+              }}
+            >
               <div className="absolute inset-0 bg-gradient-to-t from-orange-600/20 to-transparent rounded-lg" />
               <motion.div
                 className="absolute bottom-2 left-1/2 -translate-x-1/2 w-6 h-8 bg-gradient-to-t from-orange-400/80 to-amber-200/40 rounded"
@@ -448,25 +454,29 @@ function FloatingHearts() {
    BOHO DECORATION OVERLAYS
    ============================================================ */
 function BohoDecor() {
+  return <></>;
   return (
-    <div className="absolute top-0 inset-x-0 w-full pointer-events-none z-0 flex flex-col items-center opacity-85 mix-blend-multiply">
+    <div className="absolute top-0 inset-x-0 w-full pointer-events-none z-0 flex flex-col items-center opacity-45">
       {/* Top Border Arch */}
       <img
         src="/invite/Shape.png"
         alt=""
         className="w-full max-w-5xl h-auto -translate-y-10"
+        style={{ willChange: "transform" }}
       />
-      {/* Hanging Feathers */}
+      {/* Hanging Decorations */}
       <div className="absolute top-0 inset-x-0 w-full flex justify-between px-4 md:px-20">
         <img
-          src="/invite/Vector_Smart_Object.png"
+          src="/invite/Shape_.png"
           alt=""
           className="w-32 md:w-56 h-auto origin-top"
+          style={{ willChange: "transform" }}
         />
         <img
-          src="/invite/Vector_Smart_Object.png"
+          src="/invite/Shape_2.png"
           alt=""
-          className="w-32 md:w-56 h-auto scale-x-[-1] origin-top"
+          className="w-32 md:w-56 h-auto origin-top"
+          style={{ transform: "scaleX(-1)", willChange: "transform" }}
         />
       </div>
     </div>
@@ -502,8 +512,28 @@ function LoadingScreen({ onComplete }: { onComplete: () => void }) {
     const t3 = setTimeout(() => setStage(3), 3500);
     const t4 = setTimeout(() => onComplete(), 4500);
 
+    const startTime = Date.now();
+    const handleInteraction = () => {
+      // If the browser throttled our timeouts (stuck) and enough time passed,
+      // or if the user interacts, jump to the end.
+      if (Date.now() - startTime > 4500) {
+        setStage(3);
+        setTimeout(() => onComplete(), 500);
+        window.removeEventListener("scroll", handleInteraction);
+        window.removeEventListener("touchstart", handleInteraction);
+        window.removeEventListener("click", handleInteraction);
+      }
+    };
+
+    window.addEventListener("scroll", handleInteraction, { passive: true });
+    window.addEventListener("touchstart", handleInteraction, { passive: true });
+    window.addEventListener("click", handleInteraction, { passive: true });
+
     return () => {
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleInteraction);
+      window.removeEventListener("touchstart", handleInteraction);
+      window.removeEventListener("click", handleInteraction);
       clearTimeout(t1);
       clearTimeout(t2);
       clearTimeout(t3);
@@ -536,7 +566,13 @@ function LoadingScreen({ onComplete }: { onComplete: () => void }) {
           }}
           transition={{ duration: 1.2, ease: [0.4, 0, 0.2, 1] }}
         >
-          <div className="bg-[#F8F5EE]/95 backdrop-blur-sm p-4 w-full h-full flex flex-col items-center justify-center rounded">
+          <div
+            className="bg-[#F8F5EE]/95 p-4 w-full h-full flex flex-col items-center justify-center rounded"
+            style={{
+              WebkitBackdropFilter: "blur(4px)",
+              backdropFilter: "blur(4px)",
+            }}
+          >
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -690,7 +726,13 @@ function CountdownTimer() {
               }}
               transition={{ duration: 3, repeat: Infinity }}
             />
-            <div className="absolute inset-0 rounded-full bg-royal/60 backdrop-blur-md flex items-center justify-center shadow-moon border border-gold/20">
+            <div
+              className="absolute inset-0 rounded-full bg-royal/60 flex items-center justify-center shadow-moon border border-gold/20"
+              style={{
+                WebkitBackdropFilter: "blur(12px)",
+                backdropFilter: "blur(12px)",
+              }}
+            >
               <span className="text-3xl md:text-5xl font-serif text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] font-light">
                 {String(item.value).padStart(2, "0")}
               </span>
@@ -790,7 +832,11 @@ function EventCard({
         rel="noopener noreferrer"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="inline-flex items-center justify-center gap-3 mt-10 mb-20 text-xs text-[#F8F5EE] hover:text-white transition-all font-body uppercase tracking-[0.3em] border border-[#A88B5C]/40 rounded-full px-8 py-3.5 hover:bg-[#A88B5C]/10 backdrop-blur-sm group hover:border-[#A88B5C]"
+        className="inline-flex items-center justify-center gap-3 mt-10 mb-20 text-xs text-[#F8F5EE] hover:text-white transition-all font-body uppercase tracking-[0.3em] border border-[#A88B5C]/40 rounded-full px-8 py-3.5 hover:bg-[#A88B5C]/10 group hover:border-[#A88B5C]"
+        style={{
+          WebkitBackdropFilter: "blur(4px)",
+          backdropFilter: "blur(4px)",
+        }}
       >
         <Navigation className="w-3.5 h-3.5 text-[#A88B5C] group-hover:animate-pulse" />
         Navigate
@@ -824,13 +870,17 @@ function InfoCard({ icon, title, description, index }: InfoCardProps) {
         y: -8,
         transition: { duration: 0.3 },
       }}
-      className="text-center p-6 md:p-8 rounded-xl bg-[#0D1B2E] backdrop-blur-md border border-gold/20 shadow-[0_0_20px_rgba(0,0,0,0.5)] hover:border-gold/50 hover:shadow-[0_0_30px_rgba(192,154,83,0.2)] transition-all duration-500 group relative overflow-hidden"
+      className="text-center p-6 md:p-8 rounded-xl bg-[#0D1B2E] border border-gold/20 shadow-[0_0_20px_rgba(0,0,0,0.5)] hover:border-gold/50 hover:shadow-[0_0_30px_rgba(192,154,83,0.2)] transition-all duration-500 group relative overflow-hidden"
+      style={{
+        WebkitBackdropFilter: "blur(12px)",
+        backdropFilter: "blur(12px)",
+      }}
     >
       <div className="absolute inset-0 bg-[#1B365D]/50 pointer-events-none" />
       <img
         src="/mandala-pattern.png"
         alt=""
-        className="absolute inset-0 w-full h-full object-cover opacity-[0.1] mix-blend-screen pointer-events-none"
+        className="absolute inset-0 w-full h-full object-cover opacity-[0.1] pointer-events-none"
       />
 
       <motion.div
@@ -843,13 +893,6 @@ function InfoCard({ icon, title, description, index }: InfoCardProps) {
           ],
         }}
         transition={{ duration: 3, repeat: Infinity }}
-      />
-
-      {/* Decorative Prop shape for Event Card */}
-      <img
-        src="/invite/Shape_2.png"
-        alt=""
-        className="absolute -top-10 -right-10 w-32 h-32 opacity-10 mix-blend-multiply rounded-br-full pointer-events-none"
       />
 
       <div className="relative z-10">
@@ -946,11 +989,12 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-midnight text-[#6C593E] overflow-x-hidden selection:bg-gold/20 relative">
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden mix-blend-multiply">
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <img
           src="/invite/Background.png"
           alt=""
           className="w-full h-full object-cover opacity-5"
+          style={{ willChange: "transform" }}
         />
       </div>
 
@@ -980,19 +1024,20 @@ export default function Home() {
             <BohoDecor />
             <div className="absolute inset-0 bg-gradient-to-b from-midnight via-transparent to-midnight/80 pointer-events-none z-0" />
 
-            {/* Background elements */}
-            <div className="absolute top-0 left-0 w-64 h-64 mix-blend-multiply opacity-20 pointer-events-none">
+            {/* Corner Decorations */}
+            <div className="absolute top-0 left-0 w-48 md:w-64 h-48 md:h-64 opacity-20 pointer-events-none">
               <img
-                src="/invite/Shape_2.png"
+                src="/invite/Shape__2.png"
                 alt=""
-                className="w-full h-full object-cover rounded-br-full"
+                className="w-full h-full object-contain"
               />
             </div>
-            <div className="absolute bottom-0 right-0 w-64 h-64 mix-blend-multiply opacity-20 pointer-events-none">
+            <div className="absolute bottom-0 right-0 w-48 md:w-64 h-48 md:h-64 opacity-20 pointer-events-none">
               <img
-                src="/invite/Shape_2.png"
+                src="/invite/Shape__2.png"
                 alt=""
-                className="w-full h-full object-cover scale-[-1] rounded-br-full"
+                className="w-full h-full object-contain"
+                style={{ transform: "rotate(180deg)" }}
               />
             </div>
 
@@ -1081,12 +1126,16 @@ export default function Home() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.4, duration: 0.8 }}
-                className="bg-[#0D1B2E] text-white p-10 md:p-14 rounded-xl border border-gold/30 shadow-royal backdrop-blur-sm relative overflow-hidden"
+                className="bg-[#0D1B2E] text-white p-10 md:p-14 rounded-xl border border-gold/30 shadow-royal relative overflow-hidden"
+                style={{
+                  WebkitBackdropFilter: "blur(4px)",
+                  backdropFilter: "blur(4px)",
+                }}
               >
                 <img
                   src="/mughal-floral.png"
                   alt=""
-                  className="absolute inset-0 w-full h-full object-cover opacity-[0.1] mix-blend-screen pointer-events-none"
+                  className="absolute inset-0 w-full h-full object-cover opacity-[0.1] pointer-events-none"
                 />
                 <h2 className="text-3xl md:text-4xl font-serif text-gold-shimmer tracking-widest mb-6">
                   WARMLY INVITE YOU
@@ -1151,7 +1200,11 @@ export default function Home() {
             href="https://maps.app.goo.gl/bpbi1zKhA1PiFgCK8"
             target="_blank"
             rel="noopener noreferrer"
-            className="fixed bottom-6 right-6 z-50 bg-[#08111D] text-white px-5 py-3 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.4)] border border-gold/30 flex items-center gap-2.5 font-body text-xs tracking-[0.15em] uppercase hover:bg-[#1B365D] hover:border-gold/50 transition-all backdrop-blur-md"
+            className="fixed bottom-6 right-6 z-50 bg-[#08111D] text-white px-5 py-3 rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.4)] border border-gold/30 flex items-center gap-2.5 font-body text-xs tracking-[0.15em] uppercase hover:bg-[#1B365D] hover:border-gold/50 transition-all"
+            style={{
+              WebkitBackdropFilter: "blur(12px)",
+              backdropFilter: "blur(12px)",
+            }}
             whileHover={{
               scale: 1.05,
               boxShadow: "0 0 30px rgba(179,156,125,0.3)",
@@ -1169,11 +1222,12 @@ export default function Home() {
 
           {/* Footer */}
           <footer className="bg-[#08111D] text-[#F8F5EE] py-12 text-center border-t border-[#8A7454]/20 relative overflow-hidden">
-            <div className="absolute bottom-0 inset-x-0 w-full pointer-events-none z-0 flex justify-center opacity-60 mix-blend-screen">
+            <div className="absolute bottom-0 inset-x-0 w-full pointer-events-none z-0 flex justify-center opacity-60">
               <img
                 src="/invite/Shape.png"
                 alt=""
-                className="w-[800px] h-auto translate-y-1/2 opacity-10"
+                className="w-[800px] h-auto translate-y-1/2 opacity-5"
+                style={{ willChange: "transform" }}
               />
             </div>
 

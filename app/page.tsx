@@ -448,25 +448,29 @@ function FloatingHearts() {
    BOHO DECORATION OVERLAYS
    ============================================================ */
 function BohoDecor() {
+  return <></>;
   return (
-    <div className="absolute top-0 inset-x-0 w-full pointer-events-none z-0 flex flex-col items-center opacity-85 mix-blend-multiply">
+    <div className="absolute top-0 inset-x-0 w-full pointer-events-none z-0 flex flex-col items-center opacity-45">
       {/* Top Border Arch */}
       <img
         src="/invite/Shape.png"
         alt=""
         className="w-full max-w-5xl h-auto -translate-y-10"
+        style={{ willChange: "transform" }}
       />
-      {/* Hanging Feathers */}
+      {/* Hanging Decorations */}
       <div className="absolute top-0 inset-x-0 w-full flex justify-between px-4 md:px-20">
         <img
-          src="/invite/Vector_Smart_Object.png"
+          src="/invite/Shape_.png"
           alt=""
           className="w-32 md:w-56 h-auto origin-top"
+          style={{ willChange: "transform" }}
         />
         <img
-          src="/invite/Vector_Smart_Object.png"
+          src="/invite/Shape_2.png"
           alt=""
-          className="w-32 md:w-56 h-auto scale-x-[-1] origin-top"
+          className="w-32 md:w-56 h-auto origin-top"
+          style={{ transform: "scaleX(-1)", willChange: "transform" }}
         />
       </div>
     </div>
@@ -502,8 +506,28 @@ function LoadingScreen({ onComplete }: { onComplete: () => void }) {
     const t3 = setTimeout(() => setStage(3), 3500);
     const t4 = setTimeout(() => onComplete(), 4500);
 
+    const startTime = Date.now();
+    const handleInteraction = () => {
+      // If the browser throttled our timeouts (stuck) and enough time passed,
+      // or if the user interacts, jump to the end.
+      if (Date.now() - startTime > 4500) {
+        setStage(3);
+        setTimeout(() => onComplete(), 500);
+        window.removeEventListener("scroll", handleInteraction);
+        window.removeEventListener("touchstart", handleInteraction);
+        window.removeEventListener("click", handleInteraction);
+      }
+    };
+
+    window.addEventListener("scroll", handleInteraction, { passive: true });
+    window.addEventListener("touchstart", handleInteraction, { passive: true });
+    window.addEventListener("click", handleInteraction, { passive: true });
+
     return () => {
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleInteraction);
+      window.removeEventListener("touchstart", handleInteraction);
+      window.removeEventListener("click", handleInteraction);
       clearTimeout(t1);
       clearTimeout(t2);
       clearTimeout(t3);
@@ -845,13 +869,6 @@ function InfoCard({ icon, title, description, index }: InfoCardProps) {
         transition={{ duration: 3, repeat: Infinity }}
       />
 
-      {/* Decorative Prop shape for Event Card */}
-      <img
-        src="/invite/Shape_2.png"
-        alt=""
-        className="absolute -top-10 -right-10 w-32 h-32 opacity-10 mix-blend-multiply rounded-br-full pointer-events-none"
-      />
-
       <div className="relative z-10">
         <motion.div
           className="w-14 h-14 mx-auto mb-5 rounded-full bg-moonlight/10 flex items-center justify-center text-gold border border-gold/30 group-hover:bg-gold group-hover:text-midnight transition-colors duration-500 shadow-[inset_0_0_15px_rgba(255,255,255,0.05)]"
@@ -946,11 +963,12 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-midnight text-[#6C593E] overflow-x-hidden selection:bg-gold/20 relative">
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden mix-blend-multiply">
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <img
           src="/invite/Background.png"
           alt=""
           className="w-full h-full object-cover opacity-5"
+          style={{ willChange: "transform" }}
         />
       </div>
 
@@ -981,20 +999,6 @@ export default function Home() {
             <div className="absolute inset-0 bg-gradient-to-b from-midnight via-transparent to-midnight/80 pointer-events-none z-0" />
 
             {/* Background elements */}
-            <div className="absolute top-0 left-0 w-64 h-64 mix-blend-multiply opacity-20 pointer-events-none">
-              <img
-                src="/invite/Shape_2.png"
-                alt=""
-                className="w-full h-full object-cover rounded-br-full"
-              />
-            </div>
-            <div className="absolute bottom-0 right-0 w-64 h-64 mix-blend-multiply opacity-20 pointer-events-none">
-              <img
-                src="/invite/Shape_2.png"
-                alt=""
-                className="w-full h-full object-cover scale-[-1] rounded-br-full"
-              />
-            </div>
 
             <div className="max-w-3xl mx-auto px-6 text-center relative z-10">
               <motion.div
@@ -1169,11 +1173,12 @@ export default function Home() {
 
           {/* Footer */}
           <footer className="bg-[#08111D] text-[#F8F5EE] py-12 text-center border-t border-[#8A7454]/20 relative overflow-hidden">
-            <div className="absolute bottom-0 inset-x-0 w-full pointer-events-none z-0 flex justify-center opacity-60 mix-blend-screen">
+            <div className="absolute bottom-0 inset-x-0 w-full pointer-events-none z-0 flex justify-center opacity-60">
               <img
                 src="/invite/Shape.png"
                 alt=""
-                className="w-[800px] h-auto translate-y-1/2 opacity-10"
+                className="w-[800px] h-auto translate-y-1/2 opacity-5"
+                style={{ willChange: "transform" }}
               />
             </div>
 
