@@ -662,7 +662,7 @@ function LoadingScreen({ onComplete }: { onComplete: () => void }) {
    COUNTDOWN TIMER
    ============================================================ */
 function CountdownTimer() {
-  const [timeLeft, setTimeLeft] = useState({ days: 42, hours: 5, minutes: 17 });
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0 });
 
   useEffect(() => {
     const target = new Date("2026-04-06T18:00:00+05:30").getTime();
@@ -674,15 +674,22 @@ function CountdownTimer() {
         days: Math.floor(diff / (1000 * 60 * 60 * 24)),
         hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
         minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
+        isReached: diff === 0,
       };
     };
 
+    let timer: ReturnType<typeof setInterval>;
+
     const updateTime = () => {
-      setTimeLeft(calc());
+      const { days, hours, minutes, isReached } = calc();
+      setTimeLeft({ days, hours, minutes });
+      if (isReached && timer) {
+        clearInterval(timer);
+      }
     };
 
     updateTime();
-    const timer = setInterval(updateTime, 60000);
+    timer = setInterval(updateTime, 60000);
     return () => clearInterval(timer);
   }, []);
 
